@@ -37,6 +37,8 @@ def get_duals(model):
                 sets = dic_duals[c]['sets'].str.split(',', expand=True).add_prefix('set_')
                 dic_duals[c] = pd.concat([dic_duals[c], sets], axis=1)
                 dic_duals[c] = dic_duals[c].drop(columns=['sets'])
+            else:
+                dic_duals[c] = pd.DataFrame(columns=['value', 'constraint', 'set_0', 'set_1', 'set_2'])
     return dic_duals
 
 def write_duals(dict_duals: dict, path: str):
