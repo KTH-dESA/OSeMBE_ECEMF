@@ -9,5 +9,5 @@ dependencies:
 - pip:
   - pyam-iamc>=1.0
   - iam-units>=2021.11.12
-  - git+git://github.com/IAMconsortium/nomenclature.git
+  - nomenclature-iamc
   - git+https://github.com/openENTRANCE/openentrance.git@main#egg=openentrance
