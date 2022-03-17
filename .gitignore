@@ -14,6 +14,7 @@ __pycache__/*
 */.ipynb_checkpoints/*
 .DS_Store
 .ipynb_checkpoints/
+.snakemake
 
 # Project files
 .ropeproject
@@ -45,6 +46,9 @@ coverage.xml
 
 # Plots
 *.pdf
+
+# Temporary workflow files
+config_input_data
 
 # Outputs
 results/*
