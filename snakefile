@@ -1,13 +1,17 @@
-SCENARIOS = ['utopia1', 'utopia2']
+import os
+
+scenario_path = os.path.join("input_data", "diagnostic_scen")
+SCENARIOS = [x.path for x in os.scandir(scenario_path) if x.is_dir()]
+
 rule all:
     input:
         expand("results/{scen}/{scen}.xlsx", scen=SCENARIOS) #for testing, to be changed during development
 
 rule convert_dp:
     input:
-        dp_path = "data/{scen}/datapackage.json"
+        dp_path = "{scen}/datapackage.json"
     output:
-        df_path = "data/{scen}/{scen}.txt"
+        df_path = "{scen}/{scen}.txt"
     conda:
         "envs/otoole_env.yaml"
     shell:
@@ -15,20 +19,20 @@ rule convert_dp:
 
 rule build_lp:
     input:
-        df_path = "data/{scen}/{scen}.txt"
+        df_path = "{scen}/{scen}.txt"
     params:
         model_path = "model/osemosys.txt",
-        lp_path = "data/{scen}/{scen}.lp"
+        lp_path = "{scen}/{scen}.lp"
     output:
-        lp_complete_path = "data/{scen}/lp_done.txt"
+        lp_complete_path = "{scen}/lp_done.txt"
     shell:
         "python gen_lp.py {input.df_path} {params.lp_path}"
 
 rule run_model:
     input:
-        lp_complete_path = "data/{scen}/lp_done.txt"
+        lp_complete_path = "{scen}/lp_done.txt"
     params:
-        lp_path = "data/{scen}/{scen}.lp",
+        lp_path = "{scen}/{scen}.lp",
         path = "results/{scen}/{scen}"
     output:
         done_path = "results/{scen}/{scen}-sol_done.txt"
@@ -40,7 +44,7 @@ rule run_model:
 rule convert_sol:
     input:
         sol_complete_path = "results/{scen}/{scen}-sol_done.txt",
-        dp_path = "data/{scen}/datapackage.json"
+        dp_path = "{scen}/datapackage.json"
     params:
         sol_path = "results/{scen}/{scen}.sol",
         res_folder = "results/{scen}/results_csv"
@@ -53,9 +57,9 @@ rule convert_sol:
 
 rule create_configs:
     input:
-        config_tmpl = "data/config.yaml"
+        config_tmpl = "config.yaml"
     output:
-        config_scen = "data/config_{scen}.yaml"
+        config_scen = "config_{scen}.yaml"
     conda:
         "envs/yaml_env.yaml"
     shell:
@@ -64,9 +68,9 @@ rule create_configs:
 rule res_to_iamc:
     input:
         res_path = "results/{scen}/res-csv_done.txt",
-        config_file = "data/config_{scen}.yaml"
+        config_file = "config_{scen}.yaml"
     params:
-        inputs_folder = "data/{scen}/data",
+        inputs_folder = "{scen}/data",
         res_folder = "results/{scen}/results_csv"
     output:
         output_file = "results/{scen}/{scen}.xlsx"
