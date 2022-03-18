@@ -5,8 +5,13 @@ import os
 import gurobipy
 import pandas as pd
 
-def sol_gurobi(lp_path: str):
+CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
+
+def sol_gurobi(lp_path: str, log_path: str, threads: int):
     m = gurobipy.read(lp_path)
+    m.Params.Threads = threads  # limit solve to use max {threads}
+    m.Params.LogFile = log_path  # save logging to file
+    m.Params.LogToConsole = 0  # don't send log to console
     m.optimize()
 
     return m
@@ -16,7 +21,7 @@ def del_lp(p_lp: str):
     return
 
 def get_duals(model):
-    constraints = ['Constr E8_AnnualEmissionsLimit']
+    constraints = CONSTRAINTS
     try:
         dual = model.Pi
         constr = model.getConstrs()
@@ -57,19 +62,24 @@ def write_sol(sol, path_out: str, path_gen: str):
     return
 
 if __name__ == "__main__":
-    
-    args = sys.argv[1:]
 
-    if len(args) != 2:
-        print("Usage: python run.py <lp_path> <generic_out_path>")
-        exit(1)
+    # args = sys.argv[1:]
 
-    lp_path = args[0]
-    gen_path = args[1]
+    # if len(args) != 2:
+    #     print("Usage: python run.py <lp_path> <generic_out_path>")
+    #     exit(1)
+
+    # lp_path = args[0]
+    # gen_path = args[1]
+
+    lp_path = snakemake.input[0]
+    gen_path = snakemake.output[0]
+    log_path = snakemake.log[0]
+    threads = snakemake.threads
 
     outpath = gen_path + ".sol"
-    
-    model = sol_gurobi(lp_path)
+
+    model = sol_gurobi(lp_path, log_path, threads)
     del_lp(lp_path)
     dic_duals = get_duals(model)
     write_duals(dic_duals, gen_path)
