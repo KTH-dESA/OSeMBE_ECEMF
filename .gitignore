@@ -48,7 +48,7 @@ coverage.xml
 *.pdf
 
 # Temporary workflow files
-config_input_data
+working_directory/*
 
 # Outputs
 results/*
