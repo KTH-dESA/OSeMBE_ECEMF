@@ -17,6 +17,16 @@ rule convert_dp:
     shell:
         "otoole convert datapackage datafile {input.dp_path} {output.df_path}"
 
+rule pre_process:
+    input:
+        "working_directory/{scen}.txt"
+    output:
+        temporary("working_directory/{scen}.pre")
+    conda:
+        "envs/otoole_env.yaml"
+    shell:
+        "python pre_process.py otoole {input} {output}"
+
 rule build_lp:
     input:
         df_path = "{scen}/{scen}.txt"
