@@ -88,3 +88,19 @@ rule res_to_iamc:
         "envs/openentrance_env.yaml"
     shell:
         "python resultify.py {params.inputs_folder} {params.res_folder} {input.config_file} {output.output_file}"
+
+rule make_dag:
+    output: pipe("dag.txt")
+    shell:
+        "snakemake --dag > {output}"
+
+rule plot_dag:
+    input: "dag.txt"
+    output: "dag.png"
+    conda: "envs/dag.yaml"
+    shell:
+        "dot -Tpng {input} > dag.png && open dag.png"
+
+rule clean:
+    shell:
+        "rm -rf results/* && rm -rf working_directory/*"
