@@ -16,10 +16,6 @@ def sol_gurobi(lp_path: str, log_path: str, threads: int):
 
     return m
 
-def del_lp(p_lp: str):
-    os.remove(p_lp)
-    return
-
 def get_duals(model):
     constraints = CONSTRAINTS
     try:
@@ -73,17 +69,12 @@ if __name__ == "__main__":
     # gen_path = args[1]
 
     lp_path = snakemake.input[0]
-    gen_path = snakemake.output[0]
+    outpath = snakemake.output[0]
     log_path = snakemake.log[0]
+    dual_path = snakemake.output[1]
     threads = snakemake.threads
 
-    outpath = gen_path + ".sol"
-
     model = sol_gurobi(lp_path, log_path, threads)
-    del_lp(lp_path)
     dic_duals = get_duals(model)
-    write_duals(dic_duals, gen_path)
-    write_sol(model, outpath, gen_path)
-
-    file_done = open(gen_path+"-sol_done.txt", "w")
-    file_done.close()
+    write_duals(dic_duals, dual_path)
+    write_sol(model, outpath, outpath)
