@@ -6,9 +6,11 @@ dp_files = pd.read_csv('config/dp_files.txt')
 scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
+# SCENARIOS = ['diag-base']
+
 rule all:
     input:
-        expand("results/{scen}.xlsx", scen=SCENARIOS) #for testing, to be changed during development
+        expand("results/{scen}.xlsx", scen=SCENARIOS)
 
 rule convert_dp:
     message: "Coverting datapackage for {wildcards.scen}"
@@ -41,6 +43,9 @@ rule build_lp:
         temp("working_directory/{scen}.lp")
     log:
         "working_directory/{scen}.log"
+    threads: 1
+    resources:
+        mem_mb=4096
     shell:
         "glpsol -m {params.model_path} -d {input.df_path} --wlp {output} --check > {log}"
 
@@ -49,12 +54,15 @@ rule run_model:
     input:
         "working_directory/{scen}.lp",
     output:
-         temp("working_directory/{scen}.sol")
+         temp("working_directory/{scen}.sol"),
+         directory("working_directory/{scen}_duals")
     conda:
         "envs/gurobi_env.yaml"
     log:
         "working_directory/gurobi/{scen}.log",
-    threads: 2
+    threads: 8
+    resources:
+        mem_mb=16384
     script:
         "run.py"
 
