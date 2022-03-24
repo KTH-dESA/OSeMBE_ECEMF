@@ -9,4 +9,4 @@ dependencies:
 - xlrd
 - pip
 - pip:
-  - otoole
+  - git+https://github.com/HauHe/otoole.git@osembe#egg=otoole

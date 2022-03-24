@@ -2,21 +2,23 @@
 """
 import sys
 import os
-import gurobipy
+import gurobipy as gp
 import pandas as pd
 
-def sol_gurobi(lp_path: str):
-    m = gurobipy.read(lp_path)
+CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
+
+def sol_gurobi(lp_path: str, environment, threads: int):
+    m = gp.read(lp_path, environment)
+    m.Params.LogToConsole = 0  # don't send log to console
+    m.Params.Method = 2  # 2 = barrier
+    m.Params.Threads = threads  # limit solve to use max {threads}
+    m.Params.NumericFocus = 0  # 0 = automatic; 3 = slow and careful
     m.optimize()
 
     return m
 
-def del_lp(p_lp: str):
-    os.remove(p_lp)
-    return
-
 def get_duals(model):
-    constraints = ['Constr E8_AnnualEmissionsLimit']
+    constraints = CONSTRAINTS
     try:
         dual = model.Pi
         constr = model.getConstrs()
@@ -57,23 +59,25 @@ def write_sol(sol, path_out: str, path_gen: str):
     return
 
 if __name__ == "__main__":
-    
-    args = sys.argv[1:]
 
-    if len(args) != 2:
-        print("Usage: python run.py <lp_path> <generic_out_path>")
-        exit(1)
+    # args = sys.argv[1:]
 
-    lp_path = args[0]
-    gen_path = args[1]
+    # if len(args) != 2:
+    #     print("Usage: python run.py <lp_path> <generic_out_path>")
+    #     exit(1)
 
-    outpath = gen_path + ".sol"
-    
-    model = sol_gurobi(lp_path)
-    del_lp(lp_path)
+    # lp_path = args[0]
+    # gen_path = args[1]
+
+    lp_path = snakemake.input[0]
+    outpath = snakemake.output[0]
+    log_path = snakemake.log[0]
+    dual_path = snakemake.output[1]
+    threads = snakemake.threads
+
+    env = gp.Env(log_path)
+
+    model = sol_gurobi(lp_path, env, threads)
     dic_duals = get_duals(model)
-    write_duals(dic_duals, gen_path)
-    write_sol(model, outpath, gen_path)
-
-    file_done = open(gen_path+"-sol_done.txt", "w")
-    file_done.close()
+    write_duals(dic_duals, dual_path)
+    write_sol(model, outpath, outpath)
