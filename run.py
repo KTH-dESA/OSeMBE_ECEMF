@@ -2,16 +2,17 @@
 """
 import sys
 import os
-import gurobipy
+import gurobipy as gp
 import pandas as pd
 
 CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
 
-def sol_gurobi(lp_path: str, log_path: str, threads: int):
-    m = gurobipy.read(lp_path)
-    m.Params.Threads = threads  # limit solve to use max {threads}
-    m.Params.LogFile = log_path  # save logging to file
+def sol_gurobi(lp_path: str, environment, threads: int):
+    m = gp.read(lp_path, environment)
     m.Params.LogToConsole = 0  # don't send log to console
+    m.Params.Method = 2  # 2 = barrier
+    m.Params.Threads = threads  # limit solve to use max {threads}
+    m.Params.NumericFocus = 0  # 0 = automatic; 3 = slow and careful
     m.optimize()
 
     return m
@@ -74,7 +75,9 @@ if __name__ == "__main__":
     dual_path = snakemake.output[1]
     threads = snakemake.threads
 
-    model = sol_gurobi(lp_path, log_path, threads)
+    env = gp.Env(log_path)
+
+    model = sol_gurobi(lp_path, env, threads)
     dic_duals = get_duals(model)
     write_duals(dic_duals, dual_path)
     write_sol(model, outpath, outpath)
