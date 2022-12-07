@@ -8,11 +8,11 @@ def gen_lp(p_df: str, p_lp: str):
 
     str_cmd = "glpsol -m "+os.path.join('"model','osemosys.txt"') + ' -d "%(data)s" --wlp "%(lp)s" --check' % {'data': p_df, 'lp': p_lp}
     
-    try:
-        sp.run(str_cmd, shell=True, capture_output=True)
-    except:
-        file_error = open(os.sep.join(p_lp.split('/')[:-1]+['lp-error.txt']), "w")
-        file_error.close()
+    # try:
+    sp.run(str_cmd, shell=True, capture_output=True)
+    # except:
+    #     file_error = open(os.sep.join(p_lp.split('/')[:-1]+['lp-error.txt']), "w")
+    #     file_error.close()
 
 if __name__ == "__main__":
     

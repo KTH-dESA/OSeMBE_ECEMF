@@ -3,7 +3,7 @@
 import os
 import sys
 from otoole import ReadGurobi
-from otoole import ReadDatapackage
+from otoole import ReadCsv
 from otoole import WriteCsv
 from otoole import Context
 
@@ -11,7 +11,7 @@ def sol2csv(p_sol: str, p_res: str, p_dp: str):
     reader = ReadGurobi()
     writer = WriteCsv()
 
-    input_data, _ = ReadDatapackage().read(p_dp)
+    input_data, _ = ReadCsv().read(p_dp)
     converter = Context(read_strategy=reader, write_strategy=writer)
     converter.convert(p_sol, p_res, input_data=input_data)
 
