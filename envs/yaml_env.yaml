@@ -1,0 +1,7 @@
+# conda environment with yaml to edit yaml files
+name: yaml-env
+dependencies:
+- python
+- pip
+- pip:
+  - pyyaml

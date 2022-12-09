@@ -1,24 +1,44 @@
 # OSeMBE_ECEMF
-This repository contains the scenarios modelled in OSeMBE throughout the H2020 project ECEMF -European Climate and Energy Modelling Forum. And it contains a snakemake workflow to run OSeMOSYS models from datapackaget to results in IAMC format. On the workflow more below.
-# OSeMOSYS workflow
-This repo contains a workflow that allows to run one or multiple scenarios. Starting from an OSeMOSYS datapackage going through all steps running the model with gurobi and producing the results in csv format.
 
-In addition to the standard OSeMOSYS outputs, the workflow produces a csv containing the dual values for all constrains in the model. The csv is safed to the results_csv folder.
+This repository contains the scenarios modelled in OSeMBE throughout the H2020 project ECEMF -
+European Climate and Energy Modelling Forum.
 
-Input: 
+The repo contains a workflow to run OSeMOSYS models from datapackage to results file in IAMC format.
 
-- datapackage(s)
+## OSeMOSYS workflow
 
-Output:
+This workflow allows to run one or multiple scenarios.
+Starting from an OSeMOSYS datapackage going through all steps,
+running the model with the Gurobi solver and producing the results in IAMC format.
 
-- folder with csv files
+In addition to the standard OSeMOSYS outputs, the workflow can produce CSV files containing the dual values for all constraints in the model.
 
-Prerequisits:
+### Installation
 
-Usage:
+Install snakemake using conda into a new environment called `snakemake`:
 
-1. Place datapackage(s) in the folder `data`. Each datapackage should be in folder that is named after the scenario, e.g. `baseline`.
-2. Open the snakefile in a text-editor of your choice. Replace the scenario names potentially already in the list of `SCENARIOS` in line 1 with the names of your scenarios.
-3. Open terminal or command prompt in the directory of the snakefile.
-4. Perform a dry run to test snakemake with the command: `snakemake -n` [optional]
-5. Start the scenario runs with the command `snakemake --cores <number of cores to be used>`
+```bash
+conda install -c conda-forge mamba
+mamba create -c bioconda -c conda-forge -n snakemake snakemake-minimal
+```
+
+The workflow manages dependencies through conda environments.
+Dependencies are defined per rule and are installed upon first running the workflow.
+
+### Configuring the workflow
+
+3. Place the script `resultify.py` from the repo [osemosys2iamc](https://github.com/OSeMOSYS/osemosys2iamc/tree/osembe) in the root folder of the project.
+
+### Adding new scenarios
+
+1. Place datapackage(s) in the folder `input_data`. Each datapackage should be placed in a folder
+that is named after the scenario, e.g. `baseline`.
+4. Check that the file `config.yaml`, which defines the conversion of OSeMOSYS results to IAMC format
+is suitable for the model.
+
+### Running the workflow
+
+3. ***Optional***: To retrieve dual values from your model you need to edit the list of `constraints` in the file `run.py`.
+4. Open terminal or command prompt and change to the directory of the snakefile.
+5. ***Optional***: Perform a dry run to test snakemake with the command: `snakemake -n`
+5. Start the scenario runs with the command `snakemake --cores <number of cores to be used> --use-conda`

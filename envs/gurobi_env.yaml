@@ -1,0 +1,8 @@
+# conda environment with gurobipy to solve OSeMOSYS models
+name: gurobi-env
+dependencies:
+- python
+- pandas
+- pip
+- pip:
+  - gurobipy
