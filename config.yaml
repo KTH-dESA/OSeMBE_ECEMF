@@ -89,11 +89,11 @@ results:
   demand: [E2]
   unit: PJ/yr
   osemosys_param: Demand
-- iamc_variable: 'Price|Carbon'
-  dual_emission: 'CO2'
-  region: 'EU27 & EFTA'
-  unit: M€_2015/kt CO2
-  osemosys_param: Dual_Constr E8_AnnualEmissionsLimit
+# - iamc_variable: 'Price|Carbon'
+#   dual_emission: 'CO2'
+#   region: 'EU27 & EFTA'
+#   unit: M€_2015/kt CO2
+#   osemosys_param: Dual_Constr E8_AnnualEmissionsLimit
 - iamc_variable: 'Primary Energy'
   primary_technology: ['^.{6}(I0)','^.{6}(X0)','^.{2}(HY)','^.{2}(OC)','^.{2}(SO)','^.{2}(WI)']
   unit: PJ/yr

@@ -6,7 +6,7 @@ dp_files = pd.read_csv('config/dp_files.txt')
 scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
-# SCENARIOS = ['diag-base']
+SCENARIOS = ['WP1_NetZero','WP1_NetZero-LimBio', 'WP1_NetZero-LimCCS','WP1_NetZero-LimNuclear']
 
 rule all:
     input:
@@ -89,8 +89,8 @@ rule res_to_iamc:
         res_folder = "results/{scen}/results_csv"
     output:
         output_file = "results/{scen}.xlsx"
-    conda:
-        "envs/openentrance_env.yaml"
+    # conda:
+    #     "envs/openentrance_env.yaml"
     shell:
         "python resultify.py {params.inputs_folder} {params.res_folder} {input.config_file} {output.output_file}"
 

@@ -10,4 +10,4 @@ dependencies:
   - pyam-iamc>=1.0
   - iam-units>=2021.11.12
   - nomenclature-iamc
-  - git+https://github.com/openENTRANCE/openentrance.git@main#egg=openentrance
+  - -e git+https://github.com/openENTRANCE/openentrance.git@main#egg=openentrance
