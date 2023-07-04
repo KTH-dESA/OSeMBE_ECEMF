@@ -6,7 +6,7 @@ dp_files = pd.read_csv('config/dp_files.txt')
 scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
-SCENARIOS = ['WP1_NetZero','WP1_NetZero-LimBio', 'WP1_NetZero-LimCCS','WP1_NetZero-LimNuclear']
+SCENARIOS = ['WP1_NetZero']
 
 rule all:
     input:
@@ -15,7 +15,7 @@ rule all:
 rule convert_dp:
     message: "Coverting csv for {wildcards.scen}"
     input:
-        other = expand("input_data/{{scen}}/data/{files}", files=dp_files),
+        other = expand("input_data/{{scen}}/{files}", files=dp_files),
         dp_path = "input_data/{scen}/data"
     output:
         df_path = "working_directory/{scen}.txt"
@@ -36,7 +36,7 @@ rule build_lp:
         "working_directory/{scen}.log"
     threads: 1
     resources:
-        mem_mb=4096
+        mem_mb=62000
     shell:
         "glpsol -m {params.model_path} -d {input.df_path} --wlp {output} --check > {log}"
 
@@ -45,15 +45,15 @@ rule run_model:
     input:
         "working_directory/{scen}.lp",
     output:
-         temp("working_directory/{scen}.sol"),
-         directory("working_directory/{scen}_duals")
+        temp("working_directory/{scen}.sol"),
+        #directory("working_directory/{scen}_duals")
     conda:
         "envs/gurobi_env.yaml"
     log:
         "working_directory/gurobi/{scen}.log",
-    threads: 8
+    threads: 32
     resources:
-        mem_mb=16384
+        mem_mb=62000
     script:
         "run.py"
 
@@ -89,8 +89,8 @@ rule res_to_iamc:
         res_folder = "results/{scen}/results_csv"
     output:
         output_file = "results/{scen}.xlsx"
-    # conda:
-    #     "envs/openentrance_env.yaml"
+    conda:
+        "envs/openentrance_env.yaml"
     shell:
         "python resultify.py {params.inputs_folder} {params.res_folder} {input.config_file} {output.output_file}"
 
