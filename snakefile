@@ -22,7 +22,7 @@ rule convert_dp:
     conda:
         "envs/otoole_env.yaml"
     shell:
-        "otoole convert csv datafile {input.dp_path} {output.df_path}"
+        "otoole convert csv datafile {input.dp_path} {output.df_path} config/config.yaml"
 
 
 rule build_lp:
@@ -47,6 +47,7 @@ rule run_model:
     output:
         temp("working_directory/{scen}.sol"),
         #directory("working_directory/{scen}_duals")
+        #Unhash if you want dual values as output 
     conda:
         "envs/gurobi_env.yaml"
     log:

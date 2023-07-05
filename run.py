@@ -78,6 +78,6 @@ if __name__ == "__main__":
     env = gp.Env(log_path)
 
     model = sol_gurobi(lp_path, env, threads)
-    #dic_duals = get_duals(model)
+    dic_duals = get_duals(model)
     #write_duals(dic_duals, dual_path)
-    write_sol(model, outpath, outpath)
+    #write_sol(model, outpath, outpath)
