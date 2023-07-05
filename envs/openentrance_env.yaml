@@ -2,7 +2,7 @@
 name: openentrance-env
 dependencies:
 - python<3.11
-- pandas<2
+- pandas<2 # required for nomenclature-iamc
 - yaml
 - matplotlib
 - pydantic < 2

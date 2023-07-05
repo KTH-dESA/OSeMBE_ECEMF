@@ -28,6 +28,9 @@ Dependencies are defined per rule and are installed upon first running the workf
 ### Configuring the workflow
 
 3. Place the script `resultify.py` from the repo [osemosys2iamc](https://github.com/OSeMOSYS/osemosys2iamc/tree/osembe) in the root folder of the project.
+3. For the `resultify.py` script to run using the `.append` method it is required to use Pandas <2, since the `.append` is no longer supported by Pandas version 2 or newer. By using pandas less than 2 (such as 1.5) one must use a Python < 3.11. After running the snakemake workflow and specifying `--use-conda` in the shell command, the `openentrance-env` will install all dependencies. When this is completed, run:
+pip install -e  git+https://github.com/openENTRANCE/openentrance.git@main#egg=openentrance
+in the terminal while in the `openentrance-env` environment.
 
 ### Adding new scenarios
 
