@@ -6,7 +6,7 @@ dp_files = pd.read_csv('config/dp_files.txt')
 scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
-SCENARIOS = ['WP1_NetZero','WP1_NetZero-LimBio', 'WP1_NetZero-LimCCS','WP1_NetZero-LimNuclear']
+SCENARIOS = ['WP1_NetZero']
 
 rule all:
     input:
@@ -22,8 +22,8 @@ rule convert_dp:
     conda:
         "envs/otoole_env.yaml"
     shell:
-        "otoole convert csv datafile {input.dp_path} {output.df_path}"
-
+        "otoole convert csv datafile {input.dp_path} {output.df_path} config/config.yaml"
+        #"otoole convert csv datafile {input.dp_path} {output.df_path}"
 
 rule build_lp:
     input:
@@ -36,7 +36,7 @@ rule build_lp:
         "working_directory/{scen}.log"
     threads: 1
     resources:
-        mem_mb=4096
+        mem_mb=40000
     shell:
         "glpsol -m {params.model_path} -d {input.df_path} --wlp {output} --check > {log}"
 
@@ -46,14 +46,14 @@ rule run_model:
         "working_directory/{scen}.lp",
     output:
          temp("working_directory/{scen}.sol"),
-         directory("working_directory/{scen}_duals")
+         #directory("working_directory/{scen}_duals")
     conda:
         "envs/gurobi_env.yaml"
     log:
         "working_directory/gurobi/{scen}.log",
     threads: 8
     resources:
-        mem_mb=16384
+        mem_mb=45000
     script:
         "run.py"
 
