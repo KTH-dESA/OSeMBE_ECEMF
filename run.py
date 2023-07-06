@@ -5,7 +5,7 @@ import os
 import gurobipy as gp
 import pandas as pd
 
-CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
+#CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
 
 def sol_gurobi(lp_path: str, environment, threads: int):
     m = gp.read(lp_path, environment)
@@ -17,7 +17,7 @@ def sol_gurobi(lp_path: str, environment, threads: int):
 
     return m
 
-def get_duals(model):
+#def get_duals(model):
     constraints = CONSTRAINTS
     try:
         dual = model.Pi
@@ -43,7 +43,7 @@ def get_duals(model):
                 dic_duals[c] = pd.DataFrame(columns=['value', 'constraint', 'set_0', 'set_1', 'set_2'])
     return dic_duals
 
-def write_duals(dict_duals: dict, path: str):
+#def write_duals(dict_duals: dict, path: str):
     path_res = os.sep.join(path.split('/')[:-1]+['results_csv'])
     os.mkdir(path_res)
     for df in dict_duals:
@@ -72,12 +72,12 @@ if __name__ == "__main__":
     lp_path = snakemake.input[0]
     outpath = snakemake.output[0]
     log_path = snakemake.log[0]
-    dual_path = snakemake.output[1]
+    #dual_path = snakemake.output[1]
     threads = snakemake.threads
 
     env = gp.Env(log_path)
 
     model = sol_gurobi(lp_path, env, threads)
-    dic_duals = get_duals(model)
+    #dic_duals = get_duals(model)
     #write_duals(dic_duals, dual_path)
-    #write_sol(model, outpath, outpath)
+    write_sol(model, outpath, outpath)

@@ -7,6 +7,7 @@ scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
 SCENARIOS = ['WP1_NetZero']
+SCENARIOS = ['WP1_NetZero']
 
 rule all:
     input:
