@@ -7,7 +7,6 @@ scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
 SCENARIOS = ['WP1_NetZero']
-SCENARIOS = ['WP1_NetZero']
 
 rule all:
     input:
@@ -16,7 +15,6 @@ rule all:
 rule convert_dp:
     message: "Coverting csv for {wildcards.scen}"
     input:
-        other = expand("input_data/{{scen}}/{files}", files=dp_files),
         other = expand("input_data/{{scen}}/{files}", files=dp_files),
         dp_path = "input_data/{scen}/data"
     output:
@@ -38,7 +36,6 @@ rule build_lp:
     threads: 1
     resources:
         mem_mb=62000
-        mem_mb=62000
     shell:
         "glpsol -m {params.model_path} -d {input.df_path} --wlp {output} --check > {log}"
 
@@ -55,9 +52,7 @@ rule run_model:
     log:
         "working_directory/gurobi/{scen}.log",
     threads: 32
-    threads: 32
     resources:
-        mem_mb=62000
         mem_mb=62000
     script:
         "run.py"
@@ -95,7 +90,7 @@ rule res_to_iamc:
     output:
         output_file = "results/{scen}.xlsx"
     conda:
-         "envs/openentrance_env.yaml"
+        "envs/openentrance_env.yaml"
     shell:
         "python resultify.py {params.inputs_folder} {params.res_folder} {input.config_file} {output.output_file}"
 
