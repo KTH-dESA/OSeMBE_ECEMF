@@ -449,6 +449,6 @@ if __name__ == "__main__":
     model = config['model']
     scenario = config['scenario']
     regions = config['region']
-    make_plots(all_data, model, scenario, regions)
+    #make_plots(all_data, model, scenario, regions)
 
     all_data.to_excel(outpath,sheet_name='data')
