@@ -26,9 +26,19 @@ rule convert_dp:
     shell:
         "otoole -v convert csv datafile {input.dp_path} {output.df_path} config/config.yaml > {log} 2>&1"
 
+rule pre_process:
+    input:
+        "working_directory/{scen}.txt"
+    output:
+        temporary("working_directory/{scen}.pre")
+    conda:
+        "envs/otoole_env.yaml"
+    shell:
+        "python pre_process.py otoole {input} {output}"
+
 rule build_lp:
     input:
-        df_path = "working_directory/{scen}.txt"
+        df_path = "working_directory/{scen}.pre"
     params:
         model_path = "model/osemosys.txt",
     output:
