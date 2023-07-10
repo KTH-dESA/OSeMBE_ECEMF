@@ -13,16 +13,18 @@ rule all:
         expand("results/{scen}.xlsx", scen=SCENARIOS)
 
 rule convert_dp:
-    message: "Coverting csv for {wildcards.scen}"
+    message: "Converting csv for {wildcards.scen}"
     input:
-        other = expand("input_data/{{scen}}/{files}", files=dp_files),
+        other = expand("input_data/{{scen}}/data/{files}", files=dp_files),
         dp_path = "input_data/{scen}/data"
     output:
         df_path = "working_directory/{scen}.txt"
+    log:
+        "working_directory/otoole_{scen}.log"
     conda:
         "envs/otoole_env.yaml"
     shell:
-        "otoole convert csv datafile {input.dp_path} {output.df_path} config/config.yaml"
+        "otoole -v convert csv datafile {input.dp_path} {output.df_path} config/config.yaml > {log} 2>&1"
 
 rule build_lp:
     input:
@@ -46,7 +48,7 @@ rule run_model:
     output:
          temp("working_directory/{scen}.sol"),
          #directory("working_directory/{scen}_duals")
-         #Unhash the line above, and the dic_duals and write_duals (in the run.py) if you want dual values as output 
+         #Unhash the line above, and the dic_duals and write_duals (in the run.py) if you want dual values as output
     conda:
         "envs/gurobi_env.yaml"
     log:
