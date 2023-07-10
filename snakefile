@@ -47,7 +47,7 @@ rule run_model:
         "working_directory/{scen}.lp",
     output:
          temp("working_directory/{scen}.sol"),
-         #directory("working_directory/{scen}_duals")
+         directory("working_directory/{scen}_duals")
          #Unhash the line above, and the dic_duals and write_duals (in the run.py) if you want dual values as output
     conda:
         "envs/gurobi_env.yaml"

@@ -7,12 +7,13 @@ import pandas as pd
 
 #CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
 
-def sol_gurobi(lp_path: str, environment, threads: int):
+def sol_gurobi(lp_path: str, environment, log_path: str, threads: int):
     m = gp.read(lp_path, environment)
     m.Params.LogToConsole = 0  # don't send log to console
     m.Params.Method = 2  # 2 = barrier
     m.Params.Threads = threads  # limit solve to use max {threads}
     m.Params.NumericFocus = 0  # 0 = automatic; 3 = slow and careful
+    m.Params.LogFile = log_path  # don't write log to file
     m.optimize()
 
     return m
@@ -77,7 +78,7 @@ if __name__ == "__main__":
 
     env = gp.Env(log_path)
 
-    model = sol_gurobi(lp_path, env, threads)
+    model = sol_gurobi(lp_path, env, log_path, threads)
     #dic_duals = get_duals(model)
     #write_duals(dic_duals, dual_path)
     write_sol(model, outpath, outpath)
