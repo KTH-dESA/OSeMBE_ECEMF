@@ -16,7 +16,7 @@ def sol2csv(p_sol: str, p_res: str, p_dp: str):
     converter.convert(p_sol, p_res, input_data=input_data)
 
 if __name__ == '__main__':
-    
+
     args = sys.argv[1:]
 
     if len(args) != 3:
