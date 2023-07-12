@@ -102,9 +102,9 @@ rule res_to_iamc:
     output:
         output_file = "results/{scen}.xlsx"
     conda:
-        "envs/openentrance_env.yaml"
+        "envs/iamc.yaml"
     shell:
-        "python resultify.py {params.inputs_folder} {params.res_folder} {input.config_file} {output.output_file}"
+        "osemosys2iamc {params.inputs_folder} {params.res_folder} {input.config_file} {output.output_file}"
 
 rule make_dag:
     output: pipe("dag.txt")
