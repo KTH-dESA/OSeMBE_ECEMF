@@ -30,16 +30,16 @@ def read_file(filename) -> pd.DataFrame:
 
 def filter_dual_values(df: pd.DataFrame, emission: str, region: str):
     """Return dataframe with dual value for provided emissionlimit in provided region"""
-    
+
     df = df[df['set_1']==emission]
 
     df['value'] = df['value'] * (-1)
 
     df = df.rename(columns={'value': 'VALUE', 'set_0': 'REGION', 'set_1': 'EMISSION', 'set_2': 'YEAR'})
-    
+
     df = df.loc[:, ~df.columns.str.contains('^set')]
     df = df.drop(columns=['constraint'])
-    
+
     df['REGION'] = region
     df['EMISSION'] = emission
 
@@ -107,7 +107,7 @@ def filter_capacity(df: pd.DataFrame, technologies: List) -> pd.DataFrame:
         mask = df['TECHNOLOGY'].str.contains(technologies[t])
         df_t = df[mask]
         df_f = df_f.append(df_t)
-    
+
     df = pd.DataFrame(columns=["REGION","YEAR","VALUE"])
     for r in df_f["REGION"].unique():
         for y in df_f["YEAR"].unique():
@@ -123,7 +123,7 @@ def filter_ProdByTechAn(df: pd.DataFrame, technologies: List) -> pd.DataFrame:
         mask = df['TECHNOLOGY'].str.contains(technologies[t])
         df_t = df[mask]
         df_f = df_f.append(df_t)
-    
+
     df = pd.DataFrame(columns=["REGION","YEAR","VALUE"])
     for r in df_f["REGION"].unique():
         for y in df_f["YEAR"].unique():
@@ -175,7 +175,7 @@ def calculate_trade(results: dict, techs: List) -> pd.DataFrame:
         countries = countries.append(df_f.loc[:,'REGION'])
         years = years.append(df_f.loc[:,'YEAR'])
         results[p] = df_f
-    
+
     countries = countries.unique()
     years = years.unique()
     exports = results['UseByTechnology']
