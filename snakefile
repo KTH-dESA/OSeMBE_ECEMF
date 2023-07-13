@@ -74,14 +74,14 @@ rule convert_sol:
         sol_path = "working_directory/{scen}.sol",
         dp_path = "input_data/{scen}/data"
     params:
-        res_folder = "results/{scen}/results_csv"
+        res_folder = "results/{scen}/results_csv",
         config = "config/config.yaml"
     output:
         res_path = "results/{scen}/res-csv_done.txt"
     conda:
         "envs/otoole_env.yaml"
     shell:
-        "python convert.py {input.sol_path} {params.res_folder} {input.dp_path} {param.config}"
+        "python convert.py {input.sol_path} {params.res_folder} {input.dp_path} {params.config}"
 
 rule create_configs:
     input:
