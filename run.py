@@ -5,7 +5,7 @@ import os
 import gurobipy as gp
 import pandas as pd
 
-#CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
+CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
 
 def sol_gurobi(lp_path: str, environment, log_path: str, threads: int):
     m = gp.read(lp_path, environment)
