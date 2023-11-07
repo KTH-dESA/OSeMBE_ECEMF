@@ -316,11 +316,6 @@ UKReserveMarginTagTechnology:
     type: param
     dtype: float
     default: 0
-#ReserveMarginTagTechnology:
-#    indices: [REGION,TECHNOLOGY,YEAR]
-#    type: param
-#    dtype: float
-#    default: 0
 ResidualCapacity:
     indices: [REGION,TECHNOLOGY,YEAR]
     type: param

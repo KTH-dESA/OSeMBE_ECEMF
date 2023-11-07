@@ -5,7 +5,7 @@ import os
 import gurobipy as gp
 import pandas as pd
 
-#CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
+CONSTRAINTS = ['Constr E8_AnnualEmissionsLimit']
 
 def sol_gurobi(lp_path: str, environment, log_path: str, threads: int):
     m = gp.read(lp_path, environment)
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     lp_path = snakemake.input[0]
     outpath = snakemake.output[0]
     log_path = snakemake.log[0]
-    dual_path = snakemake.output[1]
+    # dual_path = snakemake.output[1]
     threads = snakemake.threads
 
     env = gp.Env(log_path)

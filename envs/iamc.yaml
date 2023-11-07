@@ -1,0 +1,11 @@
+# conda environment to run pyam and the openentrance package to create excel files in IAMC format
+name: iamc
+dependencies:
+- python<3.11
+- pandas<2 # required for nomenclature-iamc
+- yaml
+- matplotlib
+- pydantic < 2
+- pip
+- pip:
+  - osemosys2iamc>0.1

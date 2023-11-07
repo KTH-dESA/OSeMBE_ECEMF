@@ -57,8 +57,8 @@ rule run_model:
         "working_directory/{scen}.lp",
     output:
          temp("working_directory/{scen}.sol"),
-         directory("working_directory/{scen}_duals")
-         #Unhash the line above, and the dic_duals and write_duals (in the run.py) if you want dual values as output
+        #  directory("working_directory/{scen}_duals")
+        # Unhash the line above, and the dic_duals and write_duals (in the run.py) if you want dual values as output
     conda:
         "envs/gurobi_env.yaml"
     log:
@@ -74,13 +74,14 @@ rule convert_sol:
         sol_path = "working_directory/{scen}.sol",
         dp_path = "input_data/{scen}/data"
     params:
-        res_folder = "results/{scen}/results_csv"
+        res_folder = "results/{scen}/results_csv",
+        config = "config/config.yaml"
     output:
         res_path = "results/{scen}/res-csv_done.txt"
     conda:
         "envs/otoole_env.yaml"
     shell:
-        "python convert.py {input.sol_path} {params.res_folder} {input.dp_path}"
+        "python convert.py {input.sol_path} {params.res_folder} {input.dp_path} {params.config}"
 
 rule create_configs:
     input:
@@ -102,9 +103,9 @@ rule res_to_iamc:
     output:
         output_file = "results/{scen}.xlsx"
     conda:
-        "envs/openentrance_env.yaml"
+        "envs/iamc.yaml"
     shell:
-        "python resultify.py {params.inputs_folder} {params.res_folder} {input.config_file} {output.output_file}"
+        "osemosys2iamc {params.inputs_folder} {params.res_folder} {input.config_file} {output.output_file}"
 
 rule make_dag:
     output: pipe("dag.txt")

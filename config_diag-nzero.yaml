@@ -1,6 +1,6 @@
 model: OSeMBE v1.0.0
 scenario: NetZero
-region: #['Austria'] , 'Belgium', 'Bulgaria', 'Switzerland', 'Cyprus', 'Czech Republic', 'Germany', 'Denmark', 'Estonia', 'Spain', 'Finland', 'France', 'Greece', 'Croatia', 'Hungary', 'Ireland', 'Italy', 'Lithuania', 'Luxembourg', 'Latvia', 'Malta', 'The Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Sweden', 'Slovenia', 'Slovakia', 'United Kingdom',]
+region: iso2_start
 inputs:
 - iamc_variable: 'Price|Primary Energy|Biomass'
   variable_cost: ['(?=^.{2}(BM))^.{6}(X0)']
