@@ -1,6 +1,6 @@
 model: OSeMBE v1.0.0
-scenario: DIAG-C400-lin-ResidualFossil
-region: ['Austria'] #, 'Belgium', 'Bulgaria', 'Switzerland', 'Cyprus', 'Czech Republic', 'Germany', 'Denmark', 'Estonia', 'Spain', 'Finland', 'France', 'Greece', 'Croatia', 'Hungary', 'Ireland', 'Italy', 'Lithuania', 'Luxembourg', 'Latvia', 'Malta', 'The Netherlands', 'Norway', 'Poland', 'Portugal', 'Romania', 'Sweden', 'Slovenia', 'Slovakia', 'United Kingdom',]
+scenario: WP1_NPI
+region: iso2_start
 inputs:
 - iamc_variable: 'Price|Primary Energy|Biomass'
   variable_cost: ['(?=^.{2}(BM))^.{6}(X0)']
@@ -18,6 +18,26 @@ inputs:
   variable_cost: ['(?=^.{2}(OI))^.{6}(X0)']
   unit: MEUR_2015/PJ
   osemosys_param: 'VariableCost'
+- iamc_variable: 'Capital Cost|Electricity|Nuclear'
+  variable_cost: ['^.{2}(NUG3)']
+  unit: MEUR_2015/GW
+  osemosys_param: 'CapitalCost'
+- iamc_variable: 'Capital Cost|Electricity|Solar|PV'
+  variable_cost: ['^.{2}(SOUT)']
+  unit: MEUR_2015/GW
+  osemosys_param: 'CapitalCost'
+- iamc_variable: 'Capital Cost|Electricity|Wind|Offshore'
+  variable_cost: ['^.{2}(WIOFPN3)']
+  unit: MEUR_2015/GW
+  osemosys_param: 'CapitalCost'
+- iamc_variable: 'Capital Cost|Electricity|Wind|Onshore'
+  variable_cost: ['^.{2}(WIONPH3)']
+  unit: MEUR_2015/GW
+  osemosys_param: 'CapitalCost'
+- iamc_variable: 'Lifetime|Electricity|Nuclear'
+  reg_tech_param: ['^.{2}(NUG3)']
+  unit: years
+  osemosys_param: 'OperationalLife'
 results:
 - iamc_variable: 'Capacity|Electricity'
   capacity: ['^((?!(EL)|(00)).)*$']
@@ -55,12 +75,20 @@ results:
   capacity: ['(?=^.{2}(HF))^((?!00).)*$']
   unit: GW
   osemosys_param: TotalCapacityAnnual
+- iamc_variable: 'Capacity|Electricity|Solar'
+  capacity: ['^.{2}(SO)']
+  unit: GW
+  osemosys_param: TotalCapacityAnnual
 - iamc_variable: 'Capacity|Electricity|Solar|PV'
   capacity: ['^.{2}(SO)']
   unit: GW
   osemosys_param: TotalCapacityAnnual
 - iamc_variable: 'Capacity|Electricity|Wind|Offshore'
   capacity: ['(?=^.{2}(WI))^.{4}(OF)']
+  unit: GW
+  osemosys_param: TotalCapacityAnnual
+- iamc_variable: 'Capacity|Electricity|Wind'
+  capacity: ['^.{2}(WI)']
   unit: GW
   osemosys_param: TotalCapacityAnnual
 - iamc_variable: 'Capacity|Electricity|Wind|Onshore'
@@ -136,6 +164,14 @@ results:
   osemosys_param: ProductionByTechnologyAnnual
 - iamc_variable: 'Primary Energy|Wind'
   primary_technology: ['^.{2}(WI)']
+  unit: PJ/yr
+  osemosys_param: ProductionByTechnologyAnnual
+- iamc_variable: 'Primary Energy|Wind|Offshore'
+  el_prod_technology: ['(?=^.{2}(WI))^.{4}(OF)']
+  unit: PJ/yr
+  osemosys_param: ProductionByTechnologyAnnual
+- iamc_variable: 'Primary Energy|Wind|Onshore'
+  el_prod_technology: ['(?=^.{2}(WI))^.{4}(ON)']
   unit: PJ/yr
   osemosys_param: ProductionByTechnologyAnnual
 - iamc_variable: 'Secondary Energy|Electricity'
