@@ -75,12 +75,20 @@ results:
   capacity: ['(?=^.{2}(HF))^((?!00).)*$']
   unit: GW
   osemosys_param: TotalCapacityAnnual
+- iamc_variable: 'Capacity|Electricity|Solar'
+  capacity: ['^.{2}(SO)']
+  unit: GW
+  osemosys_param: TotalCapacityAnnual
 - iamc_variable: 'Capacity|Electricity|Solar|PV'
   capacity: ['^.{2}(SO)']
   unit: GW
   osemosys_param: TotalCapacityAnnual
 - iamc_variable: 'Capacity|Electricity|Wind|Offshore'
   capacity: ['(?=^.{2}(WI))^.{4}(OF)']
+  unit: GW
+  osemosys_param: TotalCapacityAnnual
+- iamc_variable: 'Capacity|Electricity|Wind'
+  capacity: ['^.{2}(WI)']
   unit: GW
   osemosys_param: TotalCapacityAnnual
 - iamc_variable: 'Capacity|Electricity|Wind|Onshore'
