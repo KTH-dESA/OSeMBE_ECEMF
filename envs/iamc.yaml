@@ -8,4 +8,4 @@ dependencies:
 - pydantic < 2
 - pip
 - pip:
-  - osemosys2iamc==0.1
+  - osemosys2iamc>0.1
