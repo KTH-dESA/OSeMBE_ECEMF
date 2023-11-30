@@ -114,7 +114,7 @@ results:
 #  unit: ktCO2/yr
 #  osemosys_param: AnnualTechnologyEmission
 - iamc_variable: 'Final Energy|Electricity'
-  demand: [E2]
+  demand: ['^.{2}(E2)']
   unit: PJ/yr
   osemosys_param: Demand
 # - iamc_variable: 'Price|Carbon'
