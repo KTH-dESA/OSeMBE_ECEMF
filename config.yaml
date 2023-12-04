@@ -114,7 +114,7 @@ results:
 #  unit: ktCO2/yr
 #  osemosys_param: AnnualTechnologyEmission
 - iamc_variable: 'Final Energy|Electricity'
-  demand: [E2]
+  demand: ['^.{2}(E2)']
   unit: PJ/yr
   osemosys_param: Demand
 # - iamc_variable: 'Price|Carbon'
@@ -122,58 +122,58 @@ results:
 #   region: 'EU27 & EFTA'
 #   unit: M€_2015/kt CO2
 #   osemosys_param: Dual_Constr E8_AnnualEmissionsLimit
-- iamc_variable: 'Primary Energy'
-  primary_technology: ['^.{6}(I0)','^.{6}(X0)','^.{2}(HY)','^.{2}(OC)','^.{2}(SO)','^.{2}(WI)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Biomass|Electricity'
-  primary_technology: ['(?=^.{2}(BM))^.{4}(00)','(?=^.{2}(WS))^.{4}(00)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Coal|Electricity'
-  primary_technology: ['(?=^.{2}(CO))^.{4}(00)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Gas|Electricity'
-  primary_technology: ['(?=^.{2}(NG))^.{4}(00)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Geothermal'
-  primary_technology: ['(?=^.{2}(GO))^.{4}(00)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Hydro'
-  primary_technology: ['^.{2}(HY)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Nuclear'
-  primary_technology: ['^.{2}(UR)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Ocean'
-  primary_technology: ['^.{2}(OC)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Oil'
-  primary_technology: ['(?=^.{2}(OI))^.{4}(00)','(?=^.{2}(HF))^.{4}(00)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Solar'
-  primary_technology: ['^.{2}(SO)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Wind'
-  primary_technology: ['^.{2}(WI)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Wind|Offshore'
-  el_prod_technology: ['(?=^.{2}(WI))^.{4}(OF)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
-- iamc_variable: 'Primary Energy|Wind|Onshore'
-  el_prod_technology: ['(?=^.{2}(WI))^.{4}(ON)']
-  unit: PJ/yr
-  osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy'
+#   primary_technology: ['^.{6}(I0)','^.{6}(X0)','^.{2}(HY)','^.{2}(OC)','^.{2}(SO)','^.{2}(WI)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Biomass|Electricity'
+#   primary_technology: ['(?=^.{2}(BM))^.{4}(00)','(?=^.{2}(WS))^.{4}(00)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Coal|Electricity'
+#   primary_technology: ['(?=^.{2}(CO))^.{4}(00)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Gas|Electricity'
+#   primary_technology: ['(?=^.{2}(NG))^.{4}(00)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Geothermal'
+#   primary_technology: ['(?=^.{2}(GO))^.{4}(00)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Hydro'
+#   primary_technology: ['^.{2}(HY)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Nuclear'
+#   primary_technology: ['^.{2}(UR)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Ocean'
+#   primary_technology: ['^.{2}(OC)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Oil'
+#   primary_technology: ['(?=^.{2}(OI))^.{4}(00)','(?=^.{2}(HF))^.{4}(00)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Solar'
+#   primary_technology: ['^.{2}(SO)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Wind'
+#   primary_technology: ['^.{2}(WI)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Wind|Offshore'
+#   el_prod_technology: ['(?=^.{2}(WI))^.{4}(OF)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
+# - iamc_variable: 'Primary Energy|Wind|Onshore'
+#   el_prod_technology: ['(?=^.{2}(WI))^.{4}(ON)']
+#   unit: PJ/yr
+#   osemosys_param: ProductionByTechnologyAnnual
 - iamc_variable: 'Secondary Energy|Electricity'
   excluded_prod_tech: ['^((?!(00)|(EL)|(RF)).)*$']
   unit: PJ/yr
