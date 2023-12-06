@@ -2,23 +2,16 @@
 """
 import os
 import sys
-from otoole import ReadGurobi, ReadCsv, WriteCsv, Context
-from otoole.utils import _read_file
+from otoole import convert_results
 
+import logging
+logger = logging.getLogger(__name__)
 
 def sol2csv(path_to_solution: str, path_to_result: str, path_to_inputs: str, path_to_config: str):
     """Convert solution from Gurobi to CSV.
     """
 
-    with open(path_to_config, "r") as file:
-        config = _read_file(file, "yaml")
-
-    reader = ReadGurobi(config)
-    writer = WriteCsv(config)
-
-    input_data, _ = ReadCsv(config).read(path_to_inputs)
-    converter = Context(read_strategy=reader, write_strategy=writer)
-    converter.convert(path_to_solution, path_to_result, input_data=input_data)
+    convert_results(path_config, 'gurobi', 'csv', path_to_solution, path_to_result, 'csv', path_to_inputs)
 
 if __name__ == '__main__':
 
