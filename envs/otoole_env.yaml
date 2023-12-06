@@ -2,5 +2,6 @@
 name: otoole-env
 dependencies:
 - pip
+- python==3.11
 - pip:
   - otoole>=1.1.0
