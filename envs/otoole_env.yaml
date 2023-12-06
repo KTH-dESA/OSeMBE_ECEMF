@@ -1,7 +1,6 @@
 # conda environment to run otoole for converting osemosys related data
 name: otoole-env
 dependencies:
-- pandas
 - pip
 - pip:
   - otoole>=1.1.0
