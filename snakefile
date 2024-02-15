@@ -6,7 +6,7 @@ dp_files = pd.read_csv('config/dp_files.txt')
 scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
-SCENARIOS = ['WP1_NetZero','WP1_NetZero-LimNuclear','WP1_NetZero-LimCCS','WP1_NetZero-LimBio']
+SCENARIOS = ['WP1_NetZero','WP1_NetZero-LimNuclear','WP1_NetZero-LimCCS','WP1_NetZero-LimBio','WP1_NPI']
 
 rule all:
     input:
