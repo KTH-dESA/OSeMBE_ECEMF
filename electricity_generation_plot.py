@@ -126,7 +126,7 @@ def impex(data, paths, selected_country):
                               &(df_filtered['FUEL']==(neighbours[i]+'E1'))]
             if len(exp.index)<5:
                 exp = exp.set_index('YEAR').reindex(years).reset_index().fillna(0)
-            exp = exp.set_index(years)
+            exp = exp.set_index(years) 
             net_imp[link] = imp['VALUE'] - exp['VALUE']
             i += 1
         net_imp_pos = pd.DataFrame(index=years,columns=links)
@@ -172,10 +172,10 @@ def create_fig(data, paths, country_sel, countries_mod, fuels, colours):
     dict_path = {}
     for path in paths:
         filtered_df = data[
-        (data['pathway'] == path)
-        & (data['region'] == country_sel)
-        & ((data['FUEL']==countr_el1)|(data['FUEL']==countr_el2))
-        & (data['fuel']!='EL')
+        (data['pathway'] == path) 
+        & (data['region'] == country_sel) 
+        & ((data['FUEL']==countr_el1)|(data['FUEL']==countr_el2)) 
+        & (data['fuel']!='EL') 
         & (data['tech_type']!='00')]
         filtered_df_p = filtered_df.pivot(index='YEAR', columns='tech_spec',  values='VALUE')
         df_by_com = pd.DataFrame()
@@ -253,7 +253,7 @@ def main(country,scenarios):
     #selec_region = 'DE'
     print(list(colour_schemes.keys()))
     # selec_scheme = input('Please select one of the above listed colour schemes by writing it here and confirming by enter:')
-    selec_scheme = 'dES_colours'
+    selec_scheme = 'dES_colours' 
     colours = colour_schemes[selec_scheme]
     figure = create_fig(df_PbTA, scenarios, country, countries_mod, fuels, colours)
     plot(figure)

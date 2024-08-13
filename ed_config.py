@@ -22,7 +22,7 @@ def main(scen: str, path_in: str, path_out: str):
     write_cfg(new_config, path_out)
 
 if __name__ == "__main__":
-
+    
     args = sys.argv[1:]
 
     scenario = args[0]
@@ -32,5 +32,5 @@ if __name__ == "__main__":
     if len(args) != 3:
         print("Usage: python ed_config.py <scenario> <input_config> <output_path_config>")
         exit(1)
-
+    
     main(scenario, path_orig_config, path_new_config)
