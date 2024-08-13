@@ -98,15 +98,17 @@ results:
 - iamc_variable: 'Carbon Capture|Biomass'
   tech_emi: ['(?=^.{2}(BM))^.{4}(CS)']
   emissions: [CO2]
+  transform: abs
   unit: kt CO2/yr
   osemosys_param: AnnualTechnologyEmission
 - iamc_variable: 'Carbon Capture|Fossil'
   tech_emi: ['(?=^.{2}(CO))^.{4}(CS)','(?=^.{2}(NG))^.{4}(CS)']
   emissions: [CO2]
   unit: kt CO2/yr
+  transform: abs
   osemosys_param: AnnualTechnologyEmission
 - iamc_variable: 'Emissions|CO2|Energy|Supply|Electricity'
-  emission: [CO2]
+  emissions: [CO2]
   unit: ktCO2/yr
   osemosys_param: AnnualTechnologyEmission
 #- iamc_variable: "Emissions|PM2.5"
