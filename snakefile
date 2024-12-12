@@ -6,8 +6,9 @@ dp_files = pd.read_csv('config/dp_files.txt')
 scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
-SCENARIOS = ['WP1_NetZero','WP1_NetZero-LimNuclear','WP1_NetZero-LimCCS','WP1_NetZero-LimBio','WP1_NPI','WP5_OPT-MIX']
-
+SCENARIOS = ['WP5_OPT-MIX-LimNuc']
+#'WP1_NetZero','WP1_NetZero-LimNuclear','WP1_NetZero-LimCCS','WP1_NetZero-LimBio','WP1_NPI'
+#'WP5_OPT-MIX-LimBio','WP5_OPT-MIX-LimCCS','WP5_OPT-MIX-LimNuc','WP5_OPT-MIX-LimRES','WP5_OPT-MIX'
 rule all:
     input:
         expand("results/{scen}.xlsx", scen=SCENARIOS)
@@ -42,7 +43,7 @@ rule build_lp:
     params:
         model_path = "model/osemosys.txt",
     output:
-        temp("working_directory/{scen}.lp")
+        "working_directory/{scen}.lp"
     log:
         "working_directory/{scen}.log"
     threads: 1
@@ -56,9 +57,8 @@ rule run_model:
     input:
         "working_directory/{scen}.lp",
     output:
-         temp("working_directory/{scen}.sol"),
-        #  directory("working_directory/{scen}_duals")
-        # Unhash the line above, and the dic_duals and write_duals (in the run.py) if you want dual values as output
+        "working_directory/{scen}.sol",
+        "results/{scen}/results_csv/dual_values_EBa11.csv"
     conda:
         "envs/gurobi_env.yaml"
     log:
