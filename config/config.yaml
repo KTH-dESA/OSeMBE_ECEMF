@@ -595,6 +595,11 @@ TotalCapacityAnnual:
     type: result
     dtype: float
     default: 0
+dual_values_EBa11:
+    indices: [REGION,TIMESLICE,FUEL,YEAR]
+    type: result
+    dtype: float
+    default: 0
 TotalDiscountedCost:
     indices: [REGION,YEAR]
     type: result

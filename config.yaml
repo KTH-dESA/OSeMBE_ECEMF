@@ -212,3 +212,7 @@ results:
   trade_tech: ['(?=^.{2}(EL))^((?!00).)*$']
   unit : PJ/yr
   osemosys_param: [UseByTechnology, ProductionByTechnologyAnnual]
+- iamc_variable: 'Price|Secondary Energy|Electricity'
+  variable_cost: ['^.{2}(E2)']
+  unit: MEUR_2015/PJ
+  osemosys_param: 'dual_values_EBa11'
