@@ -1,9 +1,16 @@
+"""
+This script runs OSeMOSYS models utilizing the Gurobi Optimizer. 
+It requires an LP file as input and generates a SOL file as output.
+"""
 import sys
 import os
 import gurobipy as gp
 import pandas as pd
 import re
 
+"""
+Choose a constraint based on the 'dual value' or 'shadow price' you wish to extract.
+"""
 CONSTRAINTS = ['Constr EBa11_EnergyBalanceEachTS5']
 
 def sol_gurobi(lp_path: str, environment, log_path: str, threads: int):
@@ -36,7 +43,7 @@ def get_duals(model, path):
                 year.append(match.group(5))
                 value.append(val)
 
-    df = pd.DataFrame({'CONSTRAINT': eq, 'REGION': region, 'TIMESLICE': timeslice, 'FUEL': fuel, 'YEAR': year, 'DUAL_VALUE': value})
+    df = pd.DataFrame({'CONSTRAINT': eq, 'REGION': region, 'TIMESLICE': timeslice, 'FUEL': fuel, 'YEAR': year, 'VALUE': value})
 
     path_res = os.path.dirname(path)
     if not os.path.exists(path_res):
@@ -54,11 +61,11 @@ def write_sol(sol, path_out: str, path_gen: str):
         print(f"Solution file written to {path_out}")
     except:
         sol.computeIIS()
-        sol.write(f"{path_gen}.ilp")
-        print(f"Solution could not be written, IIS file written to {path_gen}.ilp")
+        sol.write("%(path)s.ilp" % {'path': path_gen})
     return
 
 if __name__ == "__main__":
+
     lp_path = snakemake.input[0]
     outpath = snakemake.output[0]
     log_path = snakemake.log[0]

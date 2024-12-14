@@ -6,9 +6,17 @@ dp_files = pd.read_csv('config/dp_files.txt')
 scenario_path = os.path.join("input_data")
 SCENARIOS = [x.name for x in os.scandir(scenario_path) if x.is_dir()]
 
-SCENARIOS = ['WP5_OPT-MIX-LimNuc']
-#'WP1_NetZero','WP1_NetZero-LimNuclear','WP1_NetZero-LimCCS','WP1_NetZero-LimBio','WP1_NPI'
-#'WP5_OPT-MIX-LimBio','WP5_OPT-MIX-LimCCS','WP5_OPT-MIX-LimNuc','WP5_OPT-MIX-LimRES','WP5_OPT-MIX'
+SCENARIOS = []
+
+"""
+Scenario selection.
+
+Copy the names of scenarios that you wish to run into the SCENARIO list. 
+
+WP1: 'WP1_NetZero','WP1_NetZero-LimBio','WP1_NetZero-LimCCS','WP1_NetZero-LimNuc','WP1_NPI'
+WP5: 'WP5_OPT-MIX','WP5_OPT-MIX-LimBio','WP5_OPT-MIX-LimCCS','WP5_OPT-MIX-LimNuc','WP5_OPT-MIX-LimRES'
+"""
+
 rule all:
     input:
         expand("results/{scen}.xlsx", scen=SCENARIOS)
@@ -47,6 +55,9 @@ rule build_lp:
     log:
         "working_directory/{scen}.log"
     threads: 1
+    """
+    Specify the RAM resources (in MB) based on RAM availability of your machine.
+    """
     resources:
         mem_mb=62000
     shell:
@@ -63,7 +74,16 @@ rule run_model:
         "envs/gurobi_env.yaml"
     log:
         "working_directory/gurobi/{scen}.log",
+    """
+    Threads correspond to the core count.
+    
+    It can differ from the number of physical cores of the CPU if 
+    the CPU supports hyperthreading or multithreading. 
+    """
     threads: 32
+    """
+    Specify the RAM resources (in MB) based on RAM availability of your machine.
+    """
     resources:
         mem_mb=62000
     script:
