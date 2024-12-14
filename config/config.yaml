@@ -595,11 +595,6 @@ TotalCapacityAnnual:
     type: result
     dtype: float
     default: 0
-dual_values_EBa11:
-    indices: [REGION,TIMESLICE,FUEL,YEAR]
-    type: result
-    dtype: float
-    default: 0
 TotalDiscountedCost:
     indices: [REGION,YEAR]
     type: result
@@ -776,3 +771,10 @@ YearlyPeakUK:
     type: param
     dtype: float
     default: 0
+# The following variable should be added after adjustments
+# to the resultify.py script in osemosys2iamc
+#dual_values_EBa11:
+#    indices: [REGION,TIMESLICE,FUEL,YEAR]
+#    type: result
+#    dtype: float
+#    default: 0
