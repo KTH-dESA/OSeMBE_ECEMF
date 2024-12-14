@@ -107,23 +107,20 @@ results:
   unit: kt CO2/yr
   transform: abs
   osemosys_param: AnnualTechnologyEmission
+- iamc_variable: 'Carbon Capture'
+  tech_emi: ['(?=^.{2}(BM|CO|NG))^.{4}(CS)']
+  emissions: [CO2]
+  transform: abs
+  unit: kt CO2/yr
+  osemosys_param: AnnualTechnologyEmission
 - iamc_variable: 'Emissions|CO2|Energy|Supply|Electricity'
   emissions: [CO2]
   unit: ktCO2/yr
   osemosys_param: AnnualTechnologyEmission
-#- iamc_variable: "Emissions|PM2.5"
-#  emission: ["**PM25"]
-#  unit: ktCO2/yr
-#  osemosys_param: AnnualTechnologyEmission
 - iamc_variable: 'Final Energy|Electricity'
   demand: ['^.{2}(E2)']
   unit: PJ/yr
   osemosys_param: Demand
-# - iamc_variable: 'Price|Carbon'
-#   dual_emission: 'CO2'
-#   region: 'EU27 & EFTA'
-#   unit: M€_2015/kt CO2
-#   osemosys_param: Dual_Constr E8_AnnualEmissionsLimit
 - iamc_variable: 'Secondary Energy|Electricity'
   excluded_prod_tech: ['^((?!(00)|(EL)|(RF)).)*$']
   unit: PJ/yr
@@ -212,7 +209,9 @@ results:
   trade_tech: ['(?=^.{2}(EL))^((?!00).)*$']
   unit : PJ/yr
   osemosys_param: [UseByTechnology, ProductionByTechnologyAnnual]
-- iamc_variable: 'Price|Secondary Energy|Electricity'
-  variable_cost: ['^.{2}(E2)']
-  unit: MEUR_2015/PJ
-  osemosys_param: 'dual_values_EBa11'
+# The following variable should be added after adjustments
+# to the resultify.py script in osemosys2iamc
+#- iamc_variable: 'Price|Secondary Energy|Electricity'
+#variable_cost: ['^.{2}(E2)']
+#unit: MEUR_2015/PJ
+#osemosys_param: 'dual_values_EBa11'
