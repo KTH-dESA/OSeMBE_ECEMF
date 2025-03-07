@@ -44,12 +44,12 @@ def get_duals(model, path):
                 value.append(val)
 
     df = pd.DataFrame({'CONSTRAINT': eq, 'REGION': region, 'TIMESLICE': timeslice, 'FUEL': fuel, 'YEAR': year, 'VALUE': value})
-
+    df = df.drop('CONSTRAINT',axis=1)
     path_res = os.path.dirname(path)
     if not os.path.exists(path_res):
         os.makedirs(path_res)
     
-    filepath = os.path.join(path_res, "dual_values_EBa11.csv")
+    filepath = os.path.join(path_res, "dual_values_EBa.csv")
     df.to_csv(filepath, index=False)
     print(f"Dual values saved to {filepath}")
 
