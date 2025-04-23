@@ -59,7 +59,7 @@ rule build_lp:
     Specify the RAM resources (in MB) based on RAM availability of your machine.
     """
     resources:
-        mem_mb=62000
+        mem_mb=240000
     shell:
         "glpsol -m {params.model_path} -d {input.df_path} --wlp {output} --check > {log}"
 
@@ -69,7 +69,7 @@ rule run_model:
         "working_directory/{scen}.lp",
     output:
         "working_directory/{scen}.sol",
-        "results/{scen}/results_csv/dual_values_EBa11.csv"
+        "results/{scen}/results_csv/dual_values_EBa.csv"
     conda:
         "envs/gurobi_env.yaml"
     log:
@@ -80,12 +80,12 @@ rule run_model:
     It can differ from the number of physical cores of the CPU if 
     the CPU supports hyperthreading or multithreading. 
     """
-    threads: 32
+    threads: 48
     """
     Specify the RAM resources (in MB) based on RAM availability of your machine.
     """
     resources:
-        mem_mb=62000
+        mem_mb=240000
     script:
         "run.py"
 
@@ -116,7 +116,7 @@ rule create_configs:
 rule res_to_iamc:
     input:
         res_path = "results/{scen}/res-csv_done.txt",
-        config_file = "working_directory/config_{scen}.yaml"
+        config_file = "working_directory/config_{scen}.yaml",
     params:
         inputs_folder = "input_data/{scen}/data",
         res_folder = "results/{scen}/results_csv"
